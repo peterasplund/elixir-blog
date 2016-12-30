@@ -13,20 +13,19 @@ defmodule Blog.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", Blog do
-    pipe_through :browser
-
-    get "/", PageController, :index
-    get "single", PageController, :single
-  end
-
   scope "/admin", Blog do
     pipe_through :browser
 
-    # resources "/admin", AdminController
+    get "/", AdminController, :index
     resources "/posts", PostController
     resources "/categories", CategoryController
   end
 
-  
+  scope "/", Blog do
+    pipe_through :browser
+
+    get "/", PageController, :index
+    get "/:slug", PageController, :single
+  end
+
 end

@@ -1,5 +1,3 @@
-import Blog.Helpers
-
 defmodule Blog.CategoryController do
   use Blog.Web, :controller
 
@@ -16,9 +14,7 @@ defmodule Blog.CategoryController do
   end
 
   def create(conn, %{"category" => category_params}) do
-    changeset = Category.changeset(%Category{}, Map.merge(category_params, %{
-      "slug" => slugify Map.get(category_params, "title")
-    }))
+    changeset = Category.changeset(%Category{}, category_params)
 
     case Repo.insert(changeset) do
       {:ok, _category} ->
@@ -44,9 +40,7 @@ defmodule Blog.CategoryController do
   def update(conn, %{"id" => id, "category" => category_params}) do
     category = Repo.get!(Category, id)
 
-    changeset = Category.changeset(category, Map.merge(category_params, %{
-      "slug" => slugify Map.get(category_params, "title")
-    }))
+    changeset = Category.changeset(category, category_params)
 
     case Repo.update(changeset) do
       {:ok, category} ->

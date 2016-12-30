@@ -9,6 +9,6 @@ defmodule Blog.Helpers do
 	def slugify(input) do
 		input
 		|> String.downcase()
-		|> String.replace(" ", "-")
+		|> String.replace(~r/[^\w-]+/, "-")
 	end
 end

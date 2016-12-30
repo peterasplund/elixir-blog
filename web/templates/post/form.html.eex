@@ -1,3 +1,6 @@
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script>tinymce.init({ selector:'#post__content', height: "300" });</script>
+
 <%= form_for @changeset, @action, fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
@@ -19,7 +22,7 @@
 
   <div class="form-group">
     <%= label f, :content, class: "control-label" %>
-    <%= textarea f, :content, class: "form-control" %>
+    <%= textarea f, :content, class: "form-control", id: "post__content" %>
     <%= error_tag f, :content %>
   </div>
   

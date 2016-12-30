@@ -1,5 +1,3 @@
-import Blog.Helpers
-
 defmodule Blog.PostController do
   use Blog.Web, :controller
 
@@ -13,13 +11,12 @@ defmodule Blog.PostController do
 
   def new(conn, _params) do
     changeset = Post.changeset(%Post{})
-    render conn, "new.html", changeset: changeset, layout: {Blog.LayoutView, "admin.html"}
+    categories = Repo.all(Category) |> Enum.map(&{&1.title, &1.id})
+    render conn, "new.html", changeset: changeset, categories: categories, layout: {Blog.LayoutView, "admin.html"}
   end
 
   def create(conn, %{"post" => post_params}) do
-    changeset = Post.changeset(%Post{}, Map.merge(post_params, %{
-      "slug" => slugify Map.get(post_params, "title")
-    }))
+    changeset = Post.changeset(%Post{}, post_params)
 
     case Repo.insert(changeset) do
       {:ok, _post} ->
@@ -45,9 +42,7 @@ defmodule Blog.PostController do
 
   def update(conn, %{"id" => id, "post" => post_params}) do
     post = Repo.get!(Post, id)
-    changeset = Post.changeset(post, Map.merge(post_params, %{
-      "slug" => slugify Map.get(post_params, "title")
-    }))
+    changeset = Post.changeset(post, post_params)
 
     case Repo.update(changeset) do
       {:ok, post} ->

@@ -9,7 +9,9 @@ defmodule Blog.PageController do
 	end
 
 	def single(conn, %{"slug" => slug}) do
-		post = Repo.get!(Post, slug)
-		render conn, "single.html", post: post, layout: {Blog.LayoutView, "page.html"}
+		case Repo.get_by(Post, slug: slug) do
+			nil -> render conn, "404.html", layout: {Blog.LayoutView, "page.html"}
+			record -> render conn, "single.html", post: record, layout: {Blog.LayoutView, "page.html"}
+		end
 	end
 end

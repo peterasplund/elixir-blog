@@ -1,1 +1,7 @@
-Single
+<h1 class="post__title"><%= @post.title %></h1>
+<div class="post__content">
+	<%= raw @post.content %>
+</div>
+
+<br />
+<a href="/">Back</a>
