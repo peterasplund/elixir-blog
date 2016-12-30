@@ -1,0 +1,14 @@
+/* This file is for your main application css. */
+
+.post {
+	margin-bottom: 2rem;
+	padding-bottom: 2rem;
+	border-bottom: 1px solid #efefef;
+}
+
+.post__title {
+	color: inherit;
+}
+.post__title:hover {
+	color: inherit;
+}
