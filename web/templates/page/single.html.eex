@@ -5,25 +5,17 @@
   </div>
   <a class="post__link" href="/">Back</a>
 </div>
-
 <div class="post__comments" id="disqus_thread"></div>
+
 <script>
-    /**
-     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-     */
+    // Disqus integration
+    (function() {
+      var SHORTNAME = 'elixir-blog',
+          d = document,
+          s = d.createElement('script');
 
-    var disqus_config = function () {
-        this.page.url = "http://localhost:4000";  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = "elixir-blog"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-
-    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
-        var d = document, s = d.createElement('script');
-
-        s.src = '//elixir-blog.disqus.com/embed.js';  // IMPORTANT: Replace EXAMPLE with your forum shortname!
-
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
+      s.src = '//' + SHORTNAME + '.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.body).appendChild(s);
     })();
 </script>
