@@ -3,9 +3,6 @@ defmodule Blog.Slug do
 
   alias Blog.Repo
 
-  @doc """
-    Slugify url
-  """
   defp slugify(input) do
     input
     |> String.downcase()
@@ -15,14 +12,14 @@ defmodule Blog.Slug do
   defp find_available_slug(slug, model, i) do
     case Repo.get_by(model, slug: slug <> to_string i) do
       nil -> slug <> to_string i
-      record -> find_available_slug(slug, model, i + 1)
+      _record -> find_available_slug(slug, model, i + 1)
     end
   end
 
   defp find_available_slug(slug, model) do
     case Repo.get_by(model, slug: slug) do
       nil -> slug
-      record -> find_available_slug(slug, model, 1)
+      _record -> find_available_slug(slug, model, 1)
     end
   end
 

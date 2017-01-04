@@ -17,7 +17,7 @@
       <td><%= link "x", to: post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn-danger" %></td>
       <td><a href="<%= post_path(@conn, :show, post) %>"><%= post.title %></a></td>
       <td><%= post.slug %></td>
-      <td><%= post.content |> String.replace(~r/<[^>]*>/, "") |> String.replace("&nbsp;", "") |> Blog.Helpers.shorten_content 6 %></td>
+      <td><%= post.content |> String.replace(~r/<[^>]*>/, "") |> String.replace("&nbsp;", "") |> Blog.Helpers.shorten_content(6) %></td>
 
       <td class="text-right">
         <%= link "Edit", to: post_path(@conn, :edit, post), class: "btn btn-default btn-xs" %>

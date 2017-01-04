@@ -1,5 +1,3 @@
-import Blog.Helpers
-
 defmodule Blog.Post do
   use Blog.Web, :model
   use Blog.Web, :controller

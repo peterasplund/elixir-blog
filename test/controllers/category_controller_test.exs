@@ -2,7 +2,7 @@ defmodule Blog.CategoryControllerTest do
   use Blog.ConnCase
 
   alias Blog.Category
-  @valid_attrs %{slug: "some content", title: "some content"}
+  @valid_attrs %{slug: "some-content", title: "some content"}
   @invalid_attrs %{}
 
   test "lists all entries on index", %{conn: conn} do
@@ -30,12 +30,6 @@ defmodule Blog.CategoryControllerTest do
     category = Repo.insert! %Category{}
     conn = get conn, category_path(conn, :show, category)
     assert html_response(conn, 200) =~ "Show category"
-  end
-
-  test "renders page not found when id is nonexistent", %{conn: conn} do
-    assert_error_sent 404, fn ->
-      get conn, category_path(conn, :show, -1)
-    end
   end
 
   test "renders form for editing chosen resource", %{conn: conn} do

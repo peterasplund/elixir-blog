@@ -97,6 +97,12 @@ input, label, button {
   margin-top: 1rem;
 }
 
+.post__comments {
+  padding: 1.5rem;
+  background: #fff;
+  min-height: 150px;
+}
+
 .footer {
   margin-top: 4rem;
   padding: 3rem 0;

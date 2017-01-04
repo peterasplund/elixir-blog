@@ -8,17 +8,14 @@ defmodule Blog.User do
     timestamps
   end
 
-  @required_fields ~w(email password)
-  @optional_fields ~w()
-
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
-  def changeset(model, params \\ :empty) do
-  model
-  |> cast(params, @required_fields, @optional_fields)
-  |> unique_constraint(:email)
-  |> validate_format(:email, ~r/@/)
-  |> validate_length(:password, min: 5)
+  def changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:email, :password])
+    |> unique_constraint(:email)
+    |> validate_format(:email, ~r/@/)
+    |> validate_length(:password, min: 5)
   end
 end

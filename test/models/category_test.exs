@@ -3,7 +3,7 @@ defmodule Blog.CategoryTest do
 
   alias Blog.Category
 
-  @valid_attrs %{slug: "some content", title: "some content"}
+  @valid_attrs %{title: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
