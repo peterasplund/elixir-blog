@@ -1,8 +1,9 @@
 #Elixir blog todo:
 
--	admin login/logout auth
--	style
+-	redirect "/admin/login" -> "/admin" when logged in
+- Fix ellipsis function
+- switch out brunch for gulp or webpack
+-	style admin
+- style blog
 -	pagination
--	widgets
--	push to github
 -	host on raspberry pi

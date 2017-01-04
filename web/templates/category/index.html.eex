@@ -3,26 +3,27 @@
 <table class="table">
   <thead>
     <tr>
+      <th></th>
       <th>Title</th>
       <th>Slug</th>
-
       <th></th>
     </tr>
   </thead>
   <tbody>
 <%= for category <- @categories do %>
     <tr>
-      <td><%= category.title %></td>
+      <td><%= link "x", to: category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "btn-danger" %></td>
+      <td><a href="<%= category_path(@conn, :show, category) %>"><%= category.title %></a></td>
       <td><%= category.slug %></td>
 
       <td class="text-right">
-        <%= link "Show", to: category_path(@conn, :show, category), class: "btn btn-default btn-xs" %>
         <%= link "Edit", to: category_path(@conn, :edit, category), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<%= link "New category", to: category_path(@conn, :new) %>
+<%= link "New category", to: category_path(@conn, :new), class: "button pull-right", style: "margin-top: 1rem" %>
+
+<div style="clear:both;"></div>

@@ -1,21 +1,12 @@
-import Blog.Helpers
-
 defmodule Blog.Category do
   use Blog.Web, :model
+  use Blog.Web, :controller
 
   schema "categories" do
     field :title, :string
     field :slug, :string
 
     timestamps()
-  end
-
-  defp slugify_name(changeset) do  
-    if title = get_change(changeset, :title) do
-      put_change(changeset, :slug, slugify(title))
-    else
-      changeset
-    end
   end
 
   @doc """
@@ -25,7 +16,7 @@ defmodule Blog.Category do
     struct
     |> cast(params, [:title, :slug])
     |> validate_required([:title])
-    |> slugify_name
+    |> slugify_by_field(:title, Blog.Category)
     |> unique_constraint(:slug)
   end
 end

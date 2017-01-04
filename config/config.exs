@@ -6,11 +6,11 @@
 use Mix.Config
 
 # General application configuration
-config :phoenix_test,
+config :blog,
   ecto_repos: [Blog.Repo]
 
 # Configures the endpoint
-config :phoenix_test, Blog.Endpoint,
+config :blog, Blog.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "6o44dOCTrg1EDPt1mK3va7RgBJ5O+eYCQhCj0KkOfNUB3oTOvCKVjHXx+fmJgOFw",
   render_errors: [view: Blog.ErrorView, accepts: ~w(html json)],

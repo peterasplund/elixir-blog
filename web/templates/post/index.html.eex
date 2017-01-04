@@ -3,6 +3,7 @@
 <table class="table">
   <thead>
     <tr>
+      <th></th>
       <th>Title</th>
       <th>Slug</th>
       <th>Content</th>
@@ -13,18 +14,19 @@
   <tbody>
 <%= for post <- @posts do %>
     <tr>
-      <td><%= post.title %></td>
+      <td><%= link "x", to: post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn-danger" %></td>
+      <td><a href="<%= post_path(@conn, :show, post) %>"><%= post.title %></a></td>
       <td><%= post.slug %></td>
-      <td><%= post.content |> String.replace(~r/<[^>]*>/, "") |> String.replace("&nbsp;", "") %></td>
+      <td><%= post.content |> String.replace(~r/<[^>]*>/, "") |> String.replace("&nbsp;", "") |> Blog.Helpers.shorten_content 6 %></td>
 
       <td class="text-right">
-        <%= link "Show", to: post_path(@conn, :show, post), class: "btn btn-default btn-xs" %>
         <%= link "Edit", to: post_path(@conn, :edit, post), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<%= link "New post", to: post_path(@conn, :new) %>
+<%= link "New post", to: post_path(@conn, :new), class: "button pull-right", style: "margin-top: 1rem" %>
+
+<div style="clear:both;"></div>
