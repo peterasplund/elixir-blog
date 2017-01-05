@@ -1,0 +1,13 @@
+$block: 'row';
+
+.#{$block} {
+  @include vertical-margins(size('gutter'));
+
+  &--small {
+    @include vertical-margins(size('gutter--small'));
+  }
+
+  &--large {
+    @include vertical-margins(size('gutter--large'));
+  }
+}

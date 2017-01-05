@@ -1,9 +1,10 @@
 #Elixir blog todo:
 
+##MVP
 -	redirect "/admin/login" -> "/admin" when logged in
-- Fix ellipsis function
-- switch out brunch for gulp or webpack
--	style admin
-- style blog
 -	pagination
 -	host on raspberry pi
+
+##Nice to have
+- config table
+- refactor into restful API and create node + react SSR frontend

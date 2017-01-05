@@ -1,0 +1,16 @@
+$block: 'wrapper';
+
+.#{$block} {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  max-width: size('wrapper');
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 size('gutter');
+
+  &--main {
+    padding: size('gutter');
+  }
+}

@@ -1,0 +1,7 @@
+$block: 'text-label';
+
+.#{$block} {
+  display: block;
+  margin-bottom: size('gutter--mini');
+  color: color('font--dark');
+}

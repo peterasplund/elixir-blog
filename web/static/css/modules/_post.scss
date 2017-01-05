@@ -1,0 +1,23 @@
+$block: 'post';
+
+
+.#{$block} {
+  // set font of blog posts
+  h1, h2, h3, h4 ,h5, a, p, span, a, i, b, strong, blockquote {
+    font-family: 'Roboto Slab';
+  }
+
+  margin-bottom: size('gutter');
+
+  &__title {
+
+  }
+  &__content {
+    a {
+      color: color('primary');
+    }
+  }
+  &__link {
+    color: color('primary');
+  }
+}

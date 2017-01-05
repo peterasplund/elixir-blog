@@ -1,0 +1,40 @@
+// =================
+//  COLOR FUNCTIONS
+// =================
+
+////
+/// @group Color functions
+/// @author Nils Kaspersson
+////
+
+
+
+// color:
+// ------
+
+/// #Get and manipulate colors.
+///
+/// Pass any color or a variable from the `$site: (colors: (...))` to fetch and optionally modify it.
+///
+/// @param {Color} $color - A string matching a key in the `$colors` or a raw color value.
+///
+/// @param {Number} $saturation [null] - Pass a percentual value of `-100%` to `100%` to lighten/darken the fetched color. This also accepts numbers ranging from `-1000` to `1000` which is converted to a percentage.
+/// @return {Color}
+
+@function color($color, $saturation: null) {
+  $strength: if($saturation == null, 0%, if(unitless($saturation), percentage($saturation / 1000), $saturation));
+
+  @if type-of($color) == string {
+    @if map-has-key(map-get($site, 'colors'), $color) {
+      @return scale-color(map-get(map-get($site, 'colors'), $color), $lightness: $strength);
+    }
+
+    @else {
+      @return false;
+    }
+  }
+
+  @else if type-of($color) == color {
+    @return scale-color($color, $lightness: $strength);
+  }
+}

@@ -1,0 +1,5 @@
+$block: 'header';
+
+.#{$block} {
+  margin-bottom: size('gutter--large');
+}

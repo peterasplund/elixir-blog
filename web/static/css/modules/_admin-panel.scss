@@ -1,0 +1,35 @@
+$block: 'admin-panel';
+
+$height: 30px;
+
+.#{$block} {
+  background: #333;
+  color: #fff;
+  position: fixed;
+  z-index: z('system');
+  top: 0;
+  left: 0;
+  right: 0;
+
+  text-align: right;
+
+  height: $height;
+
+  display: flex;
+  align-items: center;
+
+  &__wrapper {
+    display: flex;
+    width: 100%;
+    height: $height;
+  }
+
+  &__item {
+    display: inline-block;
+    padding: 0 size('gutter--small');
+
+    &--left {
+      float: left;
+    }
+  }
+}

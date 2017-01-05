@@ -13,13 +13,13 @@
   </thead>
   <tbody>
 <%= for post <- @posts do %>
-    <tr>
-      <td><%= link "x", to: post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn-danger" %></td>
-      <td><a href="<%= post_path(@conn, :show, post) %>"><%= post.title %></a></td>
-      <td><%= post.slug %></td>
-      <td><%= post.content |> String.replace(~r/<[^>]*>/, "") |> String.replace("&nbsp;", "") |> Blog.Helpers.shorten_content(6) %></td>
+    <tr class="table__row">
+      <td class="table__cell"><%= link "x", to: post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn-danger" %></td>
+      <td class="table__cell"><a href="<%= post_path(@conn, :show, post) %>"><%= post.title %></a></td>
+      <td class="table__cell"><%= post.slug %></td>
+      <td class="table__cell"><%= post.content |> String.replace(~r/<[^>]*>/, "") |> String.replace("&nbsp;", "") |> Blog.Helpers.shorten_content(6) %></td>
 
-      <td class="text-right">
+      <td class="table__cell">
         <%= link "Edit", to: post_path(@conn, :edit, post), class: "btn btn-default btn-xs" %>
       </td>
     </tr>

@@ -11,12 +11,12 @@
   </thead>
   <tbody>
 <%= for category <- @categories do %>
-    <tr>
-      <td><%= link "x", to: category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "btn-danger" %></td>
-      <td><a href="<%= category_path(@conn, :show, category) %>"><%= category.title %></a></td>
-      <td><%= category.slug %></td>
+    <tr class="table__row">
+      <td class="table__cell"><%= link "x", to: category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "btn-danger" %></td>
+      <td class="table__cell"><a href="<%= category_path(@conn, :show, category) %>"><%= category.title %></a></td>
+      <td class="table__cell"><%= category.slug %></td>
 
-      <td class="text-right">
+      <td class="table__cell">
         <%= link "Edit", to: category_path(@conn, :edit, category), class: "btn btn-default btn-xs" %>
       </td>
     </tr>

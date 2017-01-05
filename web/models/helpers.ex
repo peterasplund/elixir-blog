@@ -32,4 +32,5 @@ defmodule Blog.Helpers do
     |> Enum.join(" ")
     |> String.trim_trailing
 	end
+
 end

@@ -1,0 +1,142 @@
+// =========
+//  GLOBALS
+// =========
+
+/*
+  [1] Inherit box-sizing instead of setting the as the global default. This
+      makes it easier to use 3rd party modules written with content-box.
+
+  [2] I dislike it when the cursor changes on text hover. This makes all
+      elements inherit 'cursor: default' from the html element, then we reapply
+      the correct cursor for buttons, inputs and anchor links later.
+
+  [3] In my opinion, relative makes a lot more sense as a default value than
+      static.
+
+  [4] Reapply cursor: pointer to all anchor links as it was removed at [3]. This
+      also covers anchor links without a [href] attribute so let it stay even if
+      you remove the cursor override.
+
+  [5] Elements with a tabindex are focusable, but don't have the subtle focus
+      effects other focusable elements usually have. We remove the outline and
+      reapply a focus effect manually where needed.
+*/
+
+*,
+::before,
+::after {
+  box-sizing: inherit;  /* [1] */
+  cursor:     inherit;  /* [2] */
+  position:   relative;
+}
+
+html {
+  box-sizing: border-box;
+  cursor: default;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: color('background');
+  font: 300 #{size('font')}/1 font('body'), font('fallback');
+  color: color('font');
+  @include fontSmoothing;
+
+
+  @if (config('exportBreakpoints')) {
+    &::before,
+    &::after {
+      display: none;
+    }
+
+    @each $size, $breakpoint in site('breakpoints') {
+      &::before {
+        @include mq($breakpoint) {
+          content: $size;
+        }
+      }
+    }
+
+    &::after {
+      content: quote(map-keys(site('breakpoints')));
+    }
+  }
+}
+
+#content {
+  display: flex;
+  flex-grow: 1;
+}
+
+a {
+  @extend %commonTransition;
+  color: inherit;
+  cursor: pointer; /* [4] */
+  text-decoration: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(#fff, 0);
+
+  &:focus {
+    outline: 0;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
+}
+
+img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+[tabindex] {
+  &:focus { /* [5] */
+    outline: 0;
+  }
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+mark {
+  background: color('primary');
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding-left: 0;
+  line-height: 1;
+  list-style: none;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}

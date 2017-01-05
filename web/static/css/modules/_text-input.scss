@@ -1,0 +1,76 @@
+$block: 'text-input';
+
+$background: #fff;
+$disabledColor: color('font--muted');
+$height: 4em;
+$textareaHeight: 10em;
+$boxShadow: bottom-shadow(1);
+$boxShadowActive: bottom-shadow(3);
+$padding: size('inputPadding');
+$autofillBackgroundFix: inset 0 0 0 $height $background;
+
+.#{$block} {
+  @extend %resetInput;
+  width: 100%;
+  color: inherit;
+  cursor: text;
+  background: $background;
+  padding: 0 $padding;
+  height: $height;
+  transition-property: box-shadow, border;
+  transition-duration: transition('duration--short');
+
+  .is-touch & {
+    font-size: 16px;
+  }
+
+  &:focus {
+    z-index: 1;
+  }
+
+  &[disabled],
+  &.isDisabled {
+    color: $disabledColor;
+    background: color('grey', 50);
+    cursor: not-allowed;
+  }
+
+  @include webkit-autofill {
+    -webkit-text-fill-color: color('font') !important;
+    box-shadow: $autofillBackgroundFix; /* [1a] */
+
+    &[disabled],
+    &.isDisabled {
+      -webkit-text-fill-color: $disabledColor !important;
+    }
+
+    &:focus {
+      -webkit-text-fill-color: color('font--dark') !important;
+      box-shadow: $autofillBackgroundFix;
+    }
+  }
+
+  &--stylized {
+    box-shadow: $boxShadow;
+
+    &:focus {
+      box-shadow: $boxShadowActive;
+    }
+
+    @include webkit-autofill {
+      box-shadow: $autofillBackgroundFix, $boxShadow; /* [1a] */
+
+      &:focus {
+        box-shadow: $autofillBackgroundFix, $boxShadowActive;
+      }
+    }
+  }
+
+  &__textarea {
+    @include baseTextarea;
+    flex-grow: 1;
+    padding: $padding;
+    min-height: $textareaHeight;
+    max-height: 50vh;
+  }
+}

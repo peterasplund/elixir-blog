@@ -1,0 +1,101 @@
+/*
+  typography.scss
+  ------------------------------------------------------------
+
+  Global typography rules
+*/
+
+
+// local variables:
+// ----------------
+
+  $block: 'typography';
+
+// ----------------
+
+
+@include headings(1, 2, 3, 4, 5, 6) {
+  font: 700 #{1em}/font('line-height--header') font('header'), font('fallback');
+  @include vertical-margins(1rem);
+}
+
+h1 {
+  font-size: 2.7em;
+  font-weight: 800;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  font-size: 2em;
+  font-weight: 400;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+h4 {
+  font-size: 1.25em;
+}
+
+@include headings(4, 5, 6) {
+  font-family: font('body'), font('fallback');
+  margin-bottom: 0;
+
+  + p {
+    margin-top: size('gutter--small');
+  }
+}
+
+%anchor {
+  border-bottom: 1px solid;
+  padding-bottom: 1px;
+
+  &:focus,
+  &:hover {
+    background: rgba(#fff, .2);
+  }
+
+  &:active {
+    opacity: .5;
+  }
+}
+
+p,
+.paragraph {
+  line-height: font('line-height');
+  @include vertical-margins(size('gutter--small'));
+
+  > a {
+    @extend %anchor;
+  }
+}
+
+.anchor {
+  @extend %anchor;
+}
+
+strong, b {
+  font-weight: 700;
+}
+
+.#{$block} {
+  ol, ul {
+    line-height: font('line-height');
+    padding-left: size('gutter--small');
+    list-style-position: inside;
+    @include vertical-margins(size('gutter--small'));
+
+    ul {
+      list-style-type: circle;
+    }
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+}

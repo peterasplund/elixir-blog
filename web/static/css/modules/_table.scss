@@ -1,0 +1,16 @@
+$block: 'table';
+
+.#{$block} {
+
+  th {
+    text-align: left;
+    padding: size('gutter--small');
+  }
+  &__row {
+
+  }
+  &__cell {
+    border: 1px solid color("border");
+    padding: size('gutter--small');
+  }
+}

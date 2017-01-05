@@ -1,0 +1,5 @@
+$block: 'alert';
+
+.#{$block} {
+  padding: size('gutter');
+}

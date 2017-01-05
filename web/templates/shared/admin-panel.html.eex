@@ -1,15 +1,12 @@
 <div class="admin-panel__wrapper">
   <div class="admin-panel">
-    <div class="container">
-      <ul class="nav nav-pills pull-left">
-        <li><a href="/">Site</a></li>
-      </ul>
-
-      <ul class="nav nav-pills pull-right">
-        <li><a href="/admin">Dashboard</a></li>
-        <li><a href="/admin/posts">Posts</a></li>
-        <li><a href="/admin/categories">Categories</a></li>
-        <li><a href="/admin/logout">Log out</a></li>
+    <div class="wrapper">
+      <ul class="admin-panel__menu">
+        <li class="admin-panel__item admin-panel__item--left"><a href="/">Site</a></li>
+        <li class="admin-panel__item"><a href="/admin">Dashboard</a></li>
+        <li class="admin-panel__item"><a href="/admin/posts">Posts</a></li>
+        <li class="admin-panel__item"><a href="/admin/categories">Categories</a></li>
+        <li class="admin-panel__item"><a href="/admin/logout">Log out</a></li>
       </ul>
     </div>
   </div>

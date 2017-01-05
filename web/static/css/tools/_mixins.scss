@@ -1,0 +1,445 @@
+// ========
+//  MIXINS
+// ========
+
+////
+/// @group Mixins
+/// @author Nils Kaspersson
+////
+
+
+
+// susy grid:
+// ----------
+
+/// Shortcut for generating equal width columns with Susy.
+///
+/// @param {Int} $columns - The number of columns
+/// @param {Number} $gutter - Desired gutter between columns. Leave blank to use global gutter.
+///
+/// @example scss
+/// .element {
+///   @include columns(3);
+/// }
+///
+/// @example css
+/// /* Generated CSS: */
+/// .element {
+///   width: 32.496%;
+///   float: left;
+///   margin-right: 1.257%;
+/// }
+///
+/// .element:nth-child(3n+3) {
+///   width: 32.496%;
+///   float: right;
+///   margin-right: 0;
+/// }
+
+@mixin columns($columns, $gutter: null) {
+  $grid-size: map-get($susy, columns);
+  $amount:    $grid-size / $columns;
+
+  @include span($amount of $grid-size $gutter);
+
+  &:nth-child(#{$columns}n + #{$columns}) {
+    @include span($amount of $grid-size $gutter last);
+  }
+}
+
+
+// Modernizr double negation:
+// --------------------------
+
+/// Apply rules only if element *doesn't* have the passed attribute (such as a class name).
+///
+/// This is useful with [Modernizr](http://modernizr.com/) where you only want to apply rules when Modernizr has tested positive, but don't want to be reliant on Modernizr being there forever. This is the default and intended use case for this mixin, but it can optionally be changed to check for any attribute on any element.
+///
+/// @param {String} $attribute - Class name **without the dot** to check for on the elment.
+/// @param {String} $prefix ['.no-'] - The default prefix to add to the passed attribute.
+/// @param {String} $element ['html'] - The element to check for class names on.
+///
+/// @example scss
+/// .foo {
+///   @include if(cssanimations) {
+///     opacity: 0;
+///   }
+/// }
+///
+/// .bar {
+///   @include if('[href]', null, '#someParent') {
+///     color: blue;
+///   }
+/// }
+///
+/// @example css
+/// /* Generated CSS: */
+/// html:not(.no-cssanimations) .foo {
+///   opacity: 0;
+/// }
+///
+/// #someParent:not([href]) .bar {
+///   color: blue;
+/// }
+
+@mixin if($attribute, $prefix: '.no-', $element: 'html') {
+  #{$element}:not(#{$prefix}#{$attribute}) & {
+    @content;
+  }
+}
+
+
+@mixin headings($sizes...) {
+  $uniqueId: unique-id();
+
+  %#{$uniqueId} {
+    @content;
+  }
+
+  @each $size in $sizes {
+    h#{$size},
+    .h#{$size} {
+      @extend %#{$uniqueId};
+    }
+  }
+}
+
+
+// traditional clockwise trbl-inheritance. exclude properties using 'null':
+@mixin position($position, $top: null, $right: $top, $bottom: $top, $left: $right) {
+  @if $position != null { position: $position; }
+  @if $top      != null { top:      $top;      }
+  @if $right    != null { right:    $right;    }
+  @if $bottom   != null { bottom:   $bottom;   }
+  @if $left     != null { left:     $left;     }
+}
+
+
+@mixin border($properties, $sides: null) {
+  @if length($sides) >= 4 {
+    border: $properties;
+  }
+  @else {
+    @each $side in $sides {
+      @if      $side == null   { border:        $properties; }
+      @else if $side == top    { border-top:    $properties; }
+      @else if $side == right  { border-right:  $properties; }
+      @else if $side == bottom { border-bottom: $properties; }
+      @else if $side == left   { border-left:   $properties; }
+    }
+  }
+}
+
+
+@mixin placeholder-styles {
+  &::-webkit-input-placeholder { @content; }
+  &::-moz-placeholder          { @content; }
+  &:-ms-input-placeholder      { @content; }
+}
+
+
+@mixin border-radius($radius, $corners...) {
+  @if (length($corners) >= 4) {
+    border-radius: $radius;
+  }
+
+  @else {
+    @each $corner in $corners {
+      border-#{$corner}-radius: $radius;
+    }
+  }
+}
+
+
+@mixin stretch($distance: size('gutter')) {
+  left: -#{$distance};
+  width: calc(100% + #{$distance * 2});
+  max-width: none;
+
+  .no-csscalc & {
+    left: auto;
+  }
+}
+
+
+@mixin separator($distance: size('gutter'), $directions: top, $border-style: 1px solid color('border')) {
+  @each $direction in $directions {
+    padding-#{$direction}: $distance;
+    margin-#{$direction}:  $distance;
+
+    @if ($border-style != null) {
+      border-#{$direction}: $border-style;
+    }
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+
+@mixin vertical-margins($margins-y: size('gutter'), $margins-x: 0) {
+  margin: $margins-y $margins-x;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+
+@mixin shadow-covers($bg-color: #fff, $shadow-strength: .25, $shadow-size: .75em) {
+  background:
+    linear-gradient($bg-color 30%, rgba(#fff,0)),
+    linear-gradient(rgba(#fff,0), $bg-color 70%) 0 100%,
+
+    radial-gradient(50% 0,   farthest-side, rgba(#000, $shadow-strength), rgba(#000, 0)),
+    radial-gradient(50% 100%,farthest-side, rgba(#000, $shadow-strength), rgba(#000, 0)) 0 100%;
+
+  background:
+    linear-gradient($bg-color 30%, rgba(#fff,0)),
+    linear-gradient(rgba(#fff,0), $bg-color 70%) 0 100%,
+
+    radial-gradient(farthest-side at 50% 0,    rgba(#000, $shadow-strength), rgba(#000, 0)),
+    radial-gradient(farthest-side at 50% 100%, rgba(#000, $shadow-strength), rgba(#000, 0)) 0 100%;
+
+  background-repeat: no-repeat;
+  background-color: $bg-color;
+
+  background-size: 100% 40px,
+                   100% 40px,
+                   100% $shadow-size,
+                   100% $shadow-size;
+
+  background-attachment: local,
+                         local,
+                         scroll,
+                         scroll;
+}
+
+
+// susy grid:
+@mixin columns($columns, $gutter: null) {
+  $grid-size: map-get($susy, columns);
+  $amount:    $grid-size / $columns;
+
+  @include span($amount of $grid-size $gutter);
+
+  &:nth-child(#{$columns}n + #{$columns}) {
+    @include span($amount of $grid-size $gutter last);
+  }
+}
+
+
+@mixin webkit-autofill {
+  &:-webkit-autofill {
+    @content;
+  }
+}
+
+
+
+@mixin underline($color: color('border'), $height: 1px, $offset: 0, $background-color: null) {
+  background-image: linear-gradient(to top, transparent, transparent $offset, $color $offset, $color $offset + $height, transparent $offset + $height);
+
+  @if ($background-color) {
+    $shadow: $height / 2;
+
+    text-shadow: (-$shadow) (-$shadow) 0 $background-color,
+                  ($shadow) (-$shadow) 0 $background-color,
+                 (-$shadow)  ($shadow) 0 $background-color,
+                  ($shadow)  ($shadow) 0 $background-color;
+  }
+}
+
+
+
+$opposites: (
+  'top':    'bottom',
+  'right':  'left',
+  'bottom': 'top',
+  'left':   'right',
+);
+
+@mixin triangle($direction: top, $length: 1em, $color: #fff) {
+  $active-sides: map-keys(map-remove($opposites, $direction));
+  $opposite: map-get($opposites, $direction);
+
+  content: '';
+  display: block;
+
+  width:  0;
+  height: 0;
+
+  position: absolute;
+  #{$opposite}: 100%;
+  margin-#{$opposite}: -1px;
+
+  border: $length solid transparent;
+  border-#{$direction}: 0;
+  border-#{$opposite}-color: $color;
+}
+
+
+@mixin clearfix {
+  &:after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+}
+
+@mixin commonTransition {
+  transition-property: color, background, border-color, opacity, transform, box-shadow, outline;
+  transition-duration: transition('duration');
+
+  &:active:hover {
+    transition: none;
+  }
+}
+
+%commonTransition {
+  @include commonTransition();
+}
+
+@mixin fontSmoothing {
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
+  -moz-font-feature-settings: 'liga' on;
+}
+
+@mixin momentum-scroll {
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  :global(.is-touch) & {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@mixin resetInput {
+  border:     none;
+  outline:    none;
+  background: none;
+  box-shadow: none;
+  appearance: none;
+
+  line-height:   1;
+  border-radius: 0;
+  padding:       0;
+  margin:        0;
+
+  cursor: text;
+  color: inherit;
+
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(#fff, 0);
+}
+
+%resetInput {
+  @include resetInput();
+}
+
+@mixin baseButton() {
+  @extend %resetInput;
+  @extend %commonTransition;
+  display: inline-block;
+  cursor: pointer;
+  color: inherit;
+  text-align: center;
+
+  &:active:hover:not([disabled]) {
+    user-select: none;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
+}
+
+%baseButton {
+  @include baseButton();
+}
+
+@mixin commonButton($background: transparent, $color: color('font'), $scaleColor: null, $boxShadow: inset 0 0 1em rgba(#000, .2), $padding: 1em size('gutter')) {
+  color: $color;
+  background: $background;
+  padding: $padding;
+
+  @if ($scaleColor != null) {
+    &:hover:not([disabled]),
+    &:focus:not([disabled]) {
+      color: $color;
+      background: color($background, $scaleColor);
+    }
+
+    &:active:hover:not([disabled]) {
+      color: rgba($color, .5);
+      background: color($background, -$scaleColor);
+      box-shadow: $boxShadow;
+    }
+  }
+
+  &[disabled] {
+    background: color('grey', 200);
+    color: rgba(color('font'), .5);
+  }
+}
+
+@mixin freezeButton($background, $color) {
+  color: $color;
+  background: $background;
+  cursor: default;
+
+  &:hover:not([disabled]),
+  &:focus:not([disabled]) {
+    color: $color;
+    background: $background;
+  }
+
+  &:active:hover:not([disabled]) {
+    color: $color;
+    background: $background;
+    box-shadow: none;
+  }
+}
+
+@mixin baseTextarea {
+  resize: vertical;
+  height: auto;
+  padding: size('gutter');
+  width: 100%;
+  cursor: text;
+  line-height: font('line-height');
+  background: #fff;
+  display: block;
+}
+
+@mixin ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+@mixin breakTable {
+  &, tbody, thead, tr, td, th {
+    display: block;
+  }
+}
+
+@mixin breakWords {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}

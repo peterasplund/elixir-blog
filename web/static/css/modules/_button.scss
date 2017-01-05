@@ -1,0 +1,6 @@
+$block: 'button';
+
+.#{$block} {
+  @include baseButton;
+  @include commonButton(color('primary'), #fff, 10);
+}

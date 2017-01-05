@@ -1,0 +1,9 @@
+$block: 'footer';
+
+.#{$block} {
+  margin-top: 4rem;
+  padding: 3rem 0;
+  background: #4bb;
+  color: #fff;
+  text-align: center;
+}

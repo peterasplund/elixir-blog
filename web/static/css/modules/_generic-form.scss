@@ -1,0 +1,44 @@
+$block: 'generic-form';
+
+.#{$block} {
+  display: block;
+
+  &__row {
+    @include mq('medium') {
+      display: flex;
+      padding: 0 (size('gutter') / 2);
+      @include stretch;
+    }
+
+    + .#{$block}__row {
+      margin-top: size('gutter');
+    }
+  }
+
+  &__column {
+    @include mq('medium') {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      @include span(4);
+
+      &:nth-child(3) {
+        @include span(4 last);
+      }
+
+      &--wide {
+        @include span(8);
+
+        + .#{$block}__column {
+          @include span(4 last);
+        }
+      }
+    }
+
+    &--stretch {
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
