@@ -46,9 +46,10 @@ defmodule Blog.Router do
   scope "/admin", Blog do
     pipe_through :browser
 
-    resources "/registrations", RegistrationController, only: [:new, :create]
-    get    "/login",  SessionController, :new
-    post   "/login",  SessionController, :create
+    get "/register", RegistrationController, :new
+    post "/register", RegistrationController, :create
+    get "/login",  SessionController, :new
+    post "/login",  SessionController, :create
     get "/logout", SessionController, :delete
   end
 

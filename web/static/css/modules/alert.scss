@@ -1,5 +1,13 @@
 $block: 'alert';
 
 .#{$block} {
-  padding: size('gutter');
+  padding: size('gutter--small') size('gutter');
+  color: #fff;
+
+  &-info {
+    background: color('primary');
+  }
+  &-danger {
+    background: color('negative')
+  }
 }

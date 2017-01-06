@@ -5,7 +5,7 @@ defmodule Blog.Repo.Migrations.CreatePost do
     create table(:posts) do
       add :title, :string
       add :slug, :string
-      add :content, :string, size: 1000
+      add :content, :string, size: 500000
       add :category_id, references(:categories)
 
       timestamps()

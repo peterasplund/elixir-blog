@@ -3,19 +3,6 @@ defmodule Blog.Helpers do
 		Collection of helpers for the main application
 	"""
 
-
-  defp add_dots(input, content_length, length) do
-    if content_length > length  do
-      input ++ ["…"]
-    else
-      input
-    end
-  end
-
-  defp trim_last(list) do
-    List.replace_at(list, Enum.count(list), String.trim_trailing(List.last(list)))
-  end
-
 	@doc """
 		Shorten html markup and add ellipsis
 

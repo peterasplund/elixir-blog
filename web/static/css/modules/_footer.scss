@@ -3,7 +3,8 @@ $block: 'footer';
 .#{$block} {
   margin-top: 4rem;
   padding: 3rem 0;
-  background: #4bb;
-  color: #fff;
+  background: #edf0f3;
+  color: color('font--muted');
+  font-size: size('font--small');
   text-align: center;
 }
